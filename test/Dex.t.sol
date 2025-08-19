@@ -34,7 +34,7 @@ contract DexTest is Test {
 
     function test_Exploit() public {
        //Execute the attacker here.
-        console.log(dex.getSwapPrice(address(swappabletoken1), address(swappabletoken2), 9));
+       
         is_Drained();
     }
 
