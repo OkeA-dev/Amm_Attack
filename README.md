@@ -1,9 +1,66 @@
-## DEX
-in the pool, Swappable Token1 has 100 tokens and Swappable Token2 has 100 tokens, you are an attacker with 10 of each tokens. You are to drain all the tokens in Swappable Token1.
+## Foundry
 
-Hint: Precision Loss
+**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
-## DEXTWO
-in the pool, Swappable Token1 has 100 tokens and Swappable Token2 has 100 tokens, you are an attacker with 10 of each tokens. You are to drain all the tokens in Swappable Token1 and Swappable Token2.
+Foundry consists of:
 
-# COHORTV_DEX_ASSIGNMENT
+-   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+-   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+-   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+-   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+
+## Documentation
+
+https://book.getfoundry.sh/
+
+## Usage
+
+### Build
+
+```shell
+$ forge build
+```
+
+### Test
+
+```shell
+$ forge test
+```
+
+### Format
+
+```shell
+$ forge fmt
+```
+
+### Gas Snapshots
+
+```shell
+$ forge snapshot
+```
+
+### Anvil
+
+```shell
+$ anvil
+```
+
+### Deploy
+
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+
+### Cast
+
+```shell
+$ cast <subcommand>
+```
+
+### Help
+
+```shell
+$ forge --help
+$ anvil --help
+$ cast --help
+```
